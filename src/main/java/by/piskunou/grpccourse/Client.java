@@ -1,5 +1,7 @@
 package by.piskunou.grpccourse;
 
+import java.util.Iterator;
+
 import by.piskunou.grpccourse.GreetingServiceGrpc.GreetingServiceBlockingStub;
 import by.piskunou.grpccourse.GreetingServiceOuterClass.HelloRequest;
 import by.piskunou.grpccourse.GreetingServiceOuterClass.HelloResponse;
@@ -15,8 +17,10 @@ public class Client {
 		HelloRequest request = HelloRequest.newBuilder()
 										   .setName("Cichan")
 										   .build();
-		HelloResponse response =  stub.greeting(request);
-		System.out.println(response);
+		Iterator<HelloResponse> response = stub.greeting(request);
+		while(response.hasNext()) {
+			System.out.println(response.next());
+		}
 		channel.shutdownNow();
 	}
 }
